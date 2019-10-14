@@ -20,6 +20,6 @@ def test_parse(spider, response, expected):
 - v0.1 (MVP)
   - ~~Returns a `scrapy.Response` given a testing URL~~
   - ~~Don't request on CIs by default~~
-  - Record the responses as human readable files (including its names)
+  - ~~Record the responses as human readable files (including its names)~~
   - Configure it as a proper pytest plugin
   - Release it as a library
