@@ -7,17 +7,6 @@ import scrapy
 import vcr
 
 
-def slugify(request):
-    name = request.node.name
-    name = re.sub(r"(?:\])", "", name)
-    name = re.sub(r"(?:\[|-)", "__", name)
-    name = re.sub(r"[:/\.?&=]+", "-", name)
-    if request.cls:
-        return f"{request.cls}.{name}"
-    else:
-        return name
-
-
 @pytest.fixture(scope="session")
 def vcr_settings():
     # Avoid HTTP requests in CI environments.
@@ -34,9 +23,9 @@ def vcr_settings():
 
 @pytest.fixture()
 def response(request, vcr_settings, url):
-    filename = slugify(request)
+    cassette_name = f"{request.node.name}.yaml"
     session = MockSession()
-    with vcr_settings.use_cassette(f"{filename}.yaml"):
+    with vcr_settings.use_cassette(cassette_name):
         yield session.get(url)
 
 
